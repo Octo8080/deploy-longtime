@@ -7,7 +7,8 @@ function a(){
 }
 
 serve((req) => {
-    a()
-
+    if(req.url.search("/favicon.ico")<0){
+      a()
+    }
     return new Response("Hello World\n");
 }, {port:8080});
