@@ -1,5 +1,4 @@
 import { serve } from "https://deno.land/std@0.152.0/http/server.ts";
-import { v4 } from "https://deno.land/std@0.152.0/uuid/mod.ts";
 
 let counter:{[key:string]:number} = {}
 
