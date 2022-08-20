@@ -1,20 +1,21 @@
 import { serve } from "https://deno.land/std@0.152.0/http/server.ts";
 import { v4 } from "https://deno.land/std@0.152.0/uuid/mod.ts";
 
-let s = ""
-let c = 0
+let s:string[] = []
+let c:{[key:string]:number} = {}
 
-function a(){
+function a(key){
     setInterval(()=>{
-        c++
-        console.log(`${s}:${c}`)
+        c[key]++
+        console.log(`${key}:${c[key]}`)
     },1000)
 }
 
 serve((req) => {
     if(req.url.search("/favicon.ico")<0){
-      a()
-      s = crypto.randomUUID();
+      const key = crypto.randomUUID()
+      c[key] = 0
+      a(key)
     }
     return new Response("Hello World\n");
 }, {port:8080});
