@@ -1,14 +1,13 @@
 import { serve } from "https://deno.land/std@0.152.0/http/server.ts";
 import { v4 } from "https://deno.land/std@0.152.0/uuid/mod.ts";
 
-let s:string[] = []
-let c:{[key:string]:number} = {}
+let counter:{[key:string]:number} = {}
 
-function a(key){
+function count(key){
   const p =  setInterval(()=>{
-    c[key]++
-    console.log(`${key}:${c[key]}`)
-    if(c[key]>10000){
+    counter[key]++
+    console.log(`${key}:${counter[key]}`)
+    if(counter[key]>10000){
         clearInterval(p)
     }
   },1000)
@@ -17,8 +16,8 @@ function a(key){
 serve((req) => {
   if(req.url.search("/favicon.ico")<0){
     const key = crypto.randomUUID()
-    c[key] = 0
-    a(key)
+    counter[key] = 0
+    count(key)
   }
   return new Response("Hello World\n");
 }, {port:8080});
