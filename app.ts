@@ -5,17 +5,20 @@ let s:string[] = []
 let c:{[key:string]:number} = {}
 
 function a(key){
-    setInterval(()=>{
-        c[key]++
-        console.log(`${key}:${c[key]}`)
-    },1000)
+  const p =  setInterval(()=>{
+    c[key]++
+    console.log(`${key}:${c[key]}`)
+    if(c[key]>10000){
+        clearInterval(p)
+    }
+  },1000)
 }
 
 serve((req) => {
-    if(req.url.search("/favicon.ico")<0){
-      const key = crypto.randomUUID()
-      c[key] = 0
-      a(key)
-    }
-    return new Response("Hello World\n");
+  if(req.url.search("/favicon.ico")<0){
+    const key = crypto.randomUUID()
+    c[key] = 0
+    a(key)
+  }
+  return new Response("Hello World\n");
 }, {port:8080});
